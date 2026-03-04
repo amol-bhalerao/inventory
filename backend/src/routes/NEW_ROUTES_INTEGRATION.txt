@@ -1,0 +1,10 @@
+// Update server.js to include the new routes
+// Add these imports at the top
+// const supplierRoutes = require('./routes/supplierRoutes');
+// const stockRoutes = require('./routes/stockRoutes');
+// const ledgerRoutes = require('./routes/ledgerRoutes');
+
+// Add these to the app.use() section after the existing routes:
+// app.use('/api/suppliers', supplierRoutes);
+// app.use('/api/stock', stockRoutes);
+// app.use('/api/ledger', ledgerRoutes);
