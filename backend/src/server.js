@@ -26,6 +26,7 @@ const customerRoutes = require('./routes/customerRoutes');
 const purchaseBillRoutes = require('./routes/purchaseBillRoutes');
 const stockRoutes = require('./routes/stockRoutes');
 const ledgerRoutes = require('./routes/ledgerRoutes');
+const healthRoutes = require('./routes/healthRoutes');
 
 // Initialize Express app
 const app = express();
@@ -50,6 +51,7 @@ app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use(auditLog);
 
 // Health check endpoint
+// lightweight public health path (non-api)
 app.get('/health', (req, res) => {
   res.status(200).json({
     status: 'OK',
@@ -57,6 +59,9 @@ app.get('/health', (req, res) => {
     timestamp: new Date()
   });
 });
+
+// API health route
+app.use('/api/health', healthRoutes);
 
 // API Routes
 app.use('/api/auth', authRoutes);
