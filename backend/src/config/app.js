@@ -14,7 +14,7 @@ module.exports = {
     refreshExpiresIn: process.env.JWT_REFRESH_EXPIRE || '30d'
   },
   cors: {
-    origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+    origin: (process.env.CORS_ORIGIN || 'http://localhost:3000').split(',').map(o => o.trim()),
     credentials: true
   },
   upload: {

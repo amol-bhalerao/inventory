@@ -93,8 +93,9 @@ app.use((req, res) => {
 app.use(errorHandler);
 
 // Start server
-const PORT = appConfig.app.port || 5000;
-const HOST = appConfig.app.host || 'localhost';
+// Hostinger sets PORT env var - use that first, then fall back to config
+const PORT = process.env.PORT || appConfig.app.port || 5000;
+const HOST = process.env.HOST || appConfig.app.host || '0.0.0.0';
 
 app.listen(PORT, HOST, () => {
   console.log(`
