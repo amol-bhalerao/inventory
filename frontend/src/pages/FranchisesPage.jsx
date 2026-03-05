@@ -27,16 +27,19 @@ export default function FranchisesPage() {
   const fetchFranchises = async () => {
     try {
       setLoading(true)
+      console.log('Fetching franchises...')
       const response = await franchiseService.getAll(100, 0)
+      console.log('API Response:', response)
+      console.log('Response franchises:', response?.data?.franchises)
       if (response && response.success) {
-        setFranchises(response.franchises || [])
+        console.log('Setting franchises:', response.data?.franchises || [])
+        setFranchises(response.data?.franchises || [])
       } else {
-        // Don't show error, just set empty array
+        console.log('Response not successful or missing success flag')
         setFranchises([])
       }
     } catch (error) {
       console.error('Error fetching franchises:', error)
-      // Don't show toast error, just continue with empty array
       setFranchises([])
     } finally {
       setLoading(false)
