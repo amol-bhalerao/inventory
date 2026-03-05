@@ -7,7 +7,6 @@ const fs = require('fs');
 
 // Import config
 const appConfig = require('./config/app');
-const path = require('path');
 
 // Import middleware
 const errorHandler = require('./middleware/errorHandler');
@@ -82,42 +81,15 @@ app.use('/api/ledger', ledgerRoutes);
 // Serve static files (uploads)
 app.use('/uploads', express.static(uploadsDir));
 
-// Serve frontend static files from dist folder
-const frontendDistPath = path.join(__dirname, '../../frontend/dist');
-if (fs.existsSync(frontendDistPath)) {
-  app.use(express.static(frontendDistPath));
-}
-
-// SPA catch-all route - serve index.html for all non-API routes
-// This allows React Router to handle client-side routing
-app.get('*', (req, res) => {
-  // If the request is for a file (has extension), let it 404
-  if (req.path.includes('.')) {
-    return res.status(404).json({
-      success: false,
-      message: 'File not found'
-    });
-  }
-
-  // Otherwise serve index.html for SPA routing
-  const indexPath = path.join(frontendDistPath, 'index.html');
-  if (fs.existsSync(indexPath)) {
-    res.sendFile(indexPath);
-  } else {
-    res.status(404).json({
-      success: false,
-      message: 'Frontend not found. Ensure frontend/dist/index.html exists.'
-    });
-  }
+// API-only endpoint handler
+// Frontend is on a separate host, so no SPA routing needed here
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: 'API endpoint not found',
+    path: req.path
+  });
 });
-
-// Legacy 404 handler (fallback, mostly unused now)
-// app.use((req, res) => {
-//   res.status(404).json({
-//     success: false,
-//     message: 'Endpoint not found'
-//   });
-// });
 
 // Error handling middleware
 app.use(errorHandler);
