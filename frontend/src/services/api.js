@@ -1,10 +1,10 @@
 import axios from 'axios'
 import { useAuthStore } from '../context/authStore'
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
 const apiClient = axios.create({
-  baseURL: `${API_BASE_URL}/api`
+  baseURL: API_BASE_URL
   // Don't set default Content-Type - let axios handle it based on request type
 })
 
