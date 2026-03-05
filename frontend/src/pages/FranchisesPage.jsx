@@ -29,7 +29,7 @@ export default function FranchisesPage() {
       setLoading(true)
       const response = await franchiseService.getAll(100, 0)
       if (response && response.success) {
-        setFranchises(response.data?.franchises || [])
+        setFranchises(response.franchises || [])
       } else {
         // Don't show error, just set empty array
         setFranchises([])

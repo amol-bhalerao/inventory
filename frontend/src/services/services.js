@@ -13,7 +13,7 @@ export const authService = {
 export const franchiseService = {
   getAll: async (limit, offset) => {
     const response = await apiClient.get('/franchises', { params: { limit, offset } })
-    return { ...response, data: response?.franchises || [] }
+    return response
   },
   getById: (id) => apiClient.get(`/franchises/${id}`),
   create: (data) => apiClient.post('/franchises', data),
