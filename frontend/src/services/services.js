@@ -94,7 +94,7 @@ export const dashboardService = {
 export const supplierService = {
   getAll: async (limit, offset) => {
     const response = await apiClient.get('/suppliers', { params: { limit, offset } })
-    return { ...response, data: response?.suppliers || [] }
+    return { ...response, data: response?.data?.suppliers || [] }
   },
   getById: (id) => apiClient.get(`/suppliers/${id}`),
   create: (data) => apiClient.post('/suppliers', data),
