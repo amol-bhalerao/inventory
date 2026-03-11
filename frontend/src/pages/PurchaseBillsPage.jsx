@@ -719,7 +719,7 @@ export default function PurchaseBillsPage() {
                             </td>
                             <td className="px-2 sm:px-3 py-2 hidden sm:table-cell">{item.hsn_code || '-'}</td>
                             <td className="px-2 sm:px-3 py-2 text-right">{item.quantity}</td>
-                            <td className="px-2 sm:px-3 py-2 text-right">₹{item.rate.toFixed(2)}</td>
+                            <td className="px-2 sm:px-3 py-2 text-right">₹{Number(item.rate).toFixed(2)}</td>
                             <td className="px-2 sm:px-3 py-2 text-right hidden sm:table-cell">{item.gst_percentage}%</td>
                             <td className="px-2 sm:px-3 py-2 text-right hidden md:table-cell font-semibold">
                               ₹{((item.quantity * item.rate) * (item.gst_percentage / 100)).toFixed(2)}
