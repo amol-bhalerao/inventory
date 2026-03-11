@@ -232,9 +232,9 @@ export default function PurchaseBillsPage() {
       if (response.success && response.data) {
         const billData = response.data
 
-        // Find supplier name if supplier_id is provided
-        let supplierName = ''
-        if (billData.supplier_id) {
+        // Use supplier_name from API response, or find it in suppliers array
+        let supplierName = billData.supplier_name || ''
+        if (!supplierName && billData.supplier_id) {
           const supplier = suppliers.find(s => s.id === billData.supplier_id)
           supplierName = supplier ? supplier.name : ''
         }
@@ -242,7 +242,7 @@ export default function PurchaseBillsPage() {
         setEditingId(bill.id)
         setFormData({
           bill_number: billData.bill_number || '',
-          bill_date: billData.bill_date || new Date().toISOString().split('T')[0],
+          bill_date: billData.bill_date ? billData.bill_date.split('T')[0] : new Date().toISOString().split('T')[0],
           supplier_id: billData.supplier_id || '',
           supplier_name: supplierName,
           notes: billData.notes || '',
