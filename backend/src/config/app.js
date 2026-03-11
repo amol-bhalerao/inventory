@@ -14,7 +14,14 @@ module.exports = {
     refreshExpiresIn: process.env.JWT_REFRESH_EXPIRE || '30d'
   },
   cors: {
-    origin: (process.env.CORS_ORIGIN || 'http://localhost:3000').split(',').map(o => o.trim()),
+    origin: (() => {
+      const origins = (process.env.CORS_ORIGIN || 'http://localhost:3000').split(',').map(o => o.trim());
+      // always allow localhost during development
+      if ((process.env.NODE_ENV || 'development') !== 'production' && !origins.includes('http://localhost:3000')) {
+        origins.push('http://localhost:3000');
+      }
+      return origins;
+    })(),
     credentials: true
   },
   upload: {

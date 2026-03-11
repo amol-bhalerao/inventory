@@ -25,11 +25,12 @@ export const franchiseService = {
 export const userService = {
   getAll: async () => {
     const response = await apiClient.get('/users')
-    return { ...response, data: response?.users || [] }
+    // backend returns { success, message, data: { users: [...] } }
+    return { ...response, data: response?.data?.users || response?.users || [] }
   },
   getByFranchise: async (franchiseId) => {
     const response = await apiClient.get(`/users/franchise/${franchiseId}`)
-    return { ...response, data: response?.users || [] }
+    return { ...response, data: response?.data?.users || response?.users || [] }
   },
   getById: (id) => apiClient.get(`/users/${id}`),
   create: (data) => apiClient.post('/users', data),
@@ -116,7 +117,7 @@ export const customerService = {
 export const purchaseBillService = {
   getAll: async (limit, offset) => {
     const response = await apiClient.get('/purchase-bills', { params: { limit, offset } })
-    return { ...response, data: response?.bills || [] }
+    return { ...response, data: response?.data?.bills || [] }
   },
   getById: (id) => apiClient.get(`/purchase-bills/${id}`),
   create: (data) => apiClient.post('/purchase-bills', data),

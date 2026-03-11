@@ -1,7 +1,20 @@
 import axios from 'axios'
 import { useAuthStore } from '../context/authStore'
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+// Determine API base URL. During development, prefer localhost backend
+// but allow explicit VITE_API_URL to override (useful when hitting remote dev server).
+// Determine API base URL. When running on localhost, always use local backend.
+// Otherwise use the environment variable or production fallback.
+const API_BASE_URL = (() => {
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname;
+    if (host === 'localhost' || host === '127.0.0.1') {
+      return 'http://localhost:5000/api';
+    }
+  }
+  // For production or other hosts, use env var or fallback
+  return import.meta.env.VITE_API_URL || 'https://shop.hisofttechnology.com/api';
+})();
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL
